@@ -1,3 +1,0 @@
-# CVENT
-
-Andrew Muhn

@@ -1,0 +1,11 @@
+# application.properties.template
+datasource.url=jdbc:mysql://localhost:3306/YOUR_DATABASE
+datasource.username=YOUR_USERNAME
+datasource.password=YOUR_PASSWORD
+
+#jwt.secret=YOUR_JWT_SECRET
+jwt.secret=YOUR_JWT_SECRET_PLACEHOLDER
+jwt.token-timeout-seconds=108000
+
+# Uncomment and set the desired port
+#server.port=8080

@@ -7,6 +7,7 @@ import org.yearup.data.ProductDao;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -219,7 +220,10 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         int stock = row.getInt("stock");
         boolean isFeatured = row.getBoolean("featured");
         String imageUrl = row.getString("image_url");
+        LocalDateTime createdDate = LocalDateTime.parse(row.getString("created_date"));
+        LocalDateTime lastModifiedDate = LocalDateTime.parse(row.getString("last_modified_date"));
 
-        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl);
+        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl,
+                createdDate, lastModifiedDate);
     }
 }

@@ -1,26 +1,9 @@
-package org.yearup.models;
+package org.yearup.models.dto;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-public class Product
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDTO {
     private int productId;
 
     @NotBlank(message = "product must have a name")
@@ -37,12 +20,12 @@ public class Product
     private boolean isFeatured;
     private String imageUrl;
 
-    public Product()
+    public ProductDTO()
     {
     }
 
-    public Product(int productId, String name, BigDecimal price, int categoryId, String description, String color,
-            int stock, boolean isFeatured, String imageUrl, LocalDateTime createdDate, LocalDateTime lastModifiedDate)
+    public ProductDTO(int productId, String name, BigDecimal price, int categoryId, String description, String color,
+            int stock, boolean isFeatured, String imageUrl)
     {
         this.productId = productId;
         this.name = name;
@@ -53,8 +36,6 @@ public class Product
         this.stock = stock;
         this.isFeatured = isFeatured;
         this.imageUrl = imageUrl;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     public int getProductId()
@@ -146,10 +127,4 @@ public class Product
     {
         this.imageUrl = imageUrl;
     }
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
 }

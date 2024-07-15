@@ -1,32 +1,18 @@
-package org.yearup.models;
+package org.yearup.models.dto;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-
-@EntityListeners(AuditingEntityListener.class)
-@Entity
-public class Category
-{
-    @Id
-    @GeneratedValue ( strategy = GenerationType.IDENTITY)
+public class CategoryDTO {
     private Long categoryId;
-    @NotBlank (message = "Name is required")
+    @NotBlank  (message = "Name is required")
     private String name;
     @NotBlank (message = "Description is required")
     private String description;
 
-    public Category()
-    {
+    public CategoryDTO() {
     }
 
-    public Category(Long categoryId, String name, String description)
-    {
+    public CategoryDTO(Long categoryId, String name, String description) {
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
@@ -61,9 +47,4 @@ public class Category
     {
         this.description = description;
     }
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
 }

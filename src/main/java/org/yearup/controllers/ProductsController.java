@@ -42,6 +42,8 @@ public class ProductsController
         }
     }
 
+    // list by category id
+
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id )

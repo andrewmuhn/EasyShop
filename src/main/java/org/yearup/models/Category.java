@@ -1,20 +1,17 @@
 package org.yearup.models;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
-@EntityListeners(AuditingEntityListener.class)
-@Entity
+
 public class Category
 {
-    @Id
-    @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private Long categoryId;
     @NotBlank (message = "Name is required")
     private String name;
@@ -25,11 +22,12 @@ public class Category
     {
     }
 
-    public Category(Long categoryId, String name, String description)
-    {
+    public Category(Long categoryId, String name, String description, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getCategoryId()
@@ -62,8 +60,12 @@ public class Category
         this.description = description;
     }
 
-    @CreatedDate
     private LocalDateTime createdDate;
-    @LastModifiedDate
+
     private LocalDateTime lastModifiedDate;
+
+    @PrePersist
+    protected void onCreate() { createdDate = LocalDateTime.now(ZoneOffset.UTC); }
+    @PreUpdate
+    protected void onUpdate() { lastModifiedDate = LocalDateTime.now(ZoneOffset.UTC); }
 }

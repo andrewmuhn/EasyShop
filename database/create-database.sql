@@ -26,8 +26,9 @@ CREATE TABLE profiles (
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description TEXT
-);
+    description TEXT,
+    created_date timestamp,
+    last_modified_date timestamp);
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
@@ -89,7 +90,7 @@ VALUES  (1, 'Joe', 'Joesephus', '800-555-1234', 'joejoesephus@email.com', '789 O
         (3, 'George', 'Jetson', '800-555-9876', 'george.jetson@email.com', '123 Birch Parkway','Dallas','TX','75051')     ;
 
 /* INSERT Categories */
-INSERT INTO categories (name, description) 
+INSERT INTO categories (name, description, created_date, last_modified_date)
 VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.'),
         ('Fashion', 'Discover trendy clothing and accessories for men and women.'),
         ('Home & Kitchen', 'Find everything you need to decorate and equip your home.');

@@ -46,15 +46,6 @@ public class ProductsController
         }
     }
 
-    // list by category id
-    @GetMapping("category/{id}")
-    @PreAuthorize("permitAll()")
-    public List<ProductDTO> getProductsByCategoryId(@PathVariable int id )
-    {
-        var products = productService.getProductsByCategoryId(id);
-
-        return products;
-    }
 
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")

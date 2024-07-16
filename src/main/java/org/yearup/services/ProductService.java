@@ -23,11 +23,11 @@ public class ProductService {
         this.productDao = productDao;
     }
 
-    public List<ProductDTO> getProductsByCategoryId(int id) {
-        List<Product> products = this.productDao.listByCategoryId(id).orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
-        ;
-        return products.stream().map(productMapper::toProductDTO).toList();
-    }
+//    public List<ProductDTO> getProductsByCategoryId(int id) {
+//        List<Product> products = this.productDao.listByCategoryId(id).orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+//        ;
+//        return products.stream().map(productMapper::toProductDTO).toList();
+//    }
 
     public ProductDTO getProductById(int id) {
 

@@ -42,7 +42,7 @@ public class Product
     }
 
     public Product(int productId, String name, BigDecimal price, int categoryId, String description, String color,
-            int stock, boolean isFeatured, String imageUrl, LocalDateTime createdDate, LocalDateTime lastModifiedDate)
+            int stock, boolean isFeatured, String imageUrl)
     {
         this.productId = productId;
         this.name = name;
@@ -53,8 +53,8 @@ public class Product
         this.stock = stock;
         this.isFeatured = isFeatured;
         this.imageUrl = imageUrl;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+//        this.createdDate = createdDate;
+//        this.lastModifiedDate = lastModifiedDate;
     }
 
     public int getProductId()
@@ -147,9 +147,10 @@ public class Product
         this.imageUrl = imageUrl;
     }
 
-    @CreatedDate
-    private LocalDateTime createdDate;
+//    @CreatedDate
+//    private LocalDateTime createdDate;
+//
+//    @LastModifiedDate
+//    private LocalDateTime lastModifiedDate;
 
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
 }

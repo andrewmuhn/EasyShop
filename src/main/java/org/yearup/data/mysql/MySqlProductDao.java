@@ -10,6 +10,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MySqlProductDao extends MySqlDaoBase implements ProductDao
@@ -91,7 +92,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
 
     @Override
-    public Product getById(int productId)
+    public Optional<Product> getById(int productId)
     {
         String sql = "SELECT * FROM products WHERE product_id = ?";
         try (Connection connection = getConnection())
@@ -103,14 +104,15 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
             if (row.next())
             {
-                return mapRow(row);
+                var product = mapRow(row);
+                return Optional.of(product);
             }
         }
         catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -140,10 +142,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
                 if (generatedKeys.next()) {
                     // Retrieve the auto-incremented ID
-                    int orderId = generatedKeys.getInt(1);
+                    int productId = generatedKeys.getInt(1);
 
                     // get the newly inserted category
-                    return getById(orderId);
+                    product.setProductId(productId);
+                    return product;
                 }
             }
         }
@@ -220,10 +223,10 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         int stock = row.getInt("stock");
         boolean isFeatured = row.getBoolean("featured");
         String imageUrl = row.getString("image_url");
-        LocalDateTime createdDate = LocalDateTime.parse(row.getString("created_date"));
-        LocalDateTime lastModifiedDate = LocalDateTime.parse(row.getString("last_modified_date"));
+//        LocalDateTime createdDate = LocalDateTime.parse(row.getString("created_date"));
+//        LocalDateTime lastModifiedDate = LocalDateTime.parse(row.getString("last_modified_date"));
 
-        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl,
-                createdDate, lastModifiedDate);
+        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl
+                );
     }
 }

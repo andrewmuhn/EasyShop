@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
+import org.yearup.models.dto.ProductDTO;
+import org.yearup.services.ProductService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,12 +18,14 @@ import java.util.List;
 @CrossOrigin
 public class ProductsController
 {
+    private final ProductService productService;
     private ProductDao productDao;
 
     @Autowired
-    public ProductsController(ProductDao productDao)
+    public ProductsController(ProductDao productDao, ProductService productService)
     {
         this.productDao = productDao;
+        this.productService = productService;
     }
 
     @GetMapping("")
@@ -46,21 +50,11 @@ public class ProductsController
 
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
-    public Product getById(@PathVariable int id )
+    public ProductDTO getById(@PathVariable int id )
     {
-        try
-        {
-            var product = productDao.getById(id);
-
-            if(product == null)
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            var product = productService.getProductById(id);
 
             return product;
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
     }
 
     @PostMapping()

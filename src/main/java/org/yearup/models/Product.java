@@ -152,4 +152,8 @@ public class Product
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+
+    public Object orElseThrow(Object o) {
+        return null;
+    }
 }

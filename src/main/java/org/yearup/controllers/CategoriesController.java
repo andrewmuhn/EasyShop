@@ -32,6 +32,7 @@ public class CategoriesController
     private CategoryService categoryService;
     private ProductService productService;
     private ProductDao productDao;
+    private CategoryDao categoryDao;
 
 
     // create an Autowired controller to inject the categoryDao and ProductDao

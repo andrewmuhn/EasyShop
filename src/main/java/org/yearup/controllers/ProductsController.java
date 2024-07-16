@@ -46,7 +46,6 @@ public class ProductsController
         }
     }
 
-    // list by category id
 
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
@@ -61,14 +60,9 @@ public class ProductsController
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Product addProduct(@RequestBody Product product)
     {
-        try
-        {
+
             return productDao.create(product);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+
     }
 
     @PutMapping("{id}")

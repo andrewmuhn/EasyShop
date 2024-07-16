@@ -3,6 +3,7 @@ package org.yearup.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yearup.data.mysql.MySqlCategoryDao;
+import org.yearup.exceptions.EntityNotFoundException;
 import org.yearup.mapper.CategoryMapper;
 import org.yearup.models.Category;
 import org.yearup.models.dto.CategoryDTO;
@@ -29,14 +30,14 @@ public class CategoryService {
     }
 
     public CategoryDTO getCategoryById(int id){
-        Category category = categoryDao.getById(id);
-//                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        Category category = categoryDao.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
         return categoryMapper.toCategoryDTO(category);
     }
 
     public void deleteCategory(int id){
-        Category category = categoryDao.getById(id);
-//                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        Category category = categoryDao.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
         categoryDao.delete(id);
     }
 
@@ -47,8 +48,8 @@ public class CategoryService {
     }
 
     public void updateCategory(UpdateCategoryDTO dto, int id){
-        Category category = categoryDao.getById(id);
-//                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        Category category = categoryDao.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
 
         category.setName(dto.getName());
         category.setDescription(dto.getDescription());

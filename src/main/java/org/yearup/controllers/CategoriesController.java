@@ -10,8 +10,11 @@ import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 import org.yearup.models.dto.CategoryDTO;
+import org.yearup.models.dto.CreateCategoryDTO;
 import org.yearup.services.CategoryService;
+import org.yearup.services.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 // add the annotations to make this a REST controller
@@ -24,6 +27,7 @@ import java.util.List;
 public class CategoriesController
 {
     private CategoryService categoryService;
+    private ProductService productService;
     private ProductDao productDao;
 
 
@@ -57,18 +61,24 @@ public class CategoriesController
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
     @GetMapping("{categoryId}/products")
+    @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
+//        return new ResponseEntity<>(productService.)
         return null;
     }
 
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
-    public Category addCategory(@RequestBody Category category)
+    @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CreateCategoryDTO dto)
     {
         // insert the category
-        return null;
+        var category = categoryService.createCategory(dto);
+
+        return new ResponseEntity<>(category, HttpStatus.CREATED);
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId

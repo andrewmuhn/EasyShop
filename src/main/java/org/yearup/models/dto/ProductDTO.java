@@ -1,11 +1,9 @@
-package org.yearup.models;
-
+package org.yearup.models.dto;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
-public class Product
-{
+public class ProductDTO {
     private int productId;
 
     @NotBlank(message = "product must have a name")
@@ -22,11 +20,11 @@ public class Product
     private boolean isFeatured;
     private String imageUrl;
 
-    public Product()
+    public ProductDTO()
     {
     }
 
-    public Product(int productId, String name, BigDecimal price, int categoryId, String description, String color,
+    public ProductDTO(int productId, String name, BigDecimal price, int categoryId, String description, String color,
             int stock, boolean isFeatured, String imageUrl)
     {
         this.productId = productId;
@@ -38,8 +36,6 @@ public class Product
         this.stock = stock;
         this.isFeatured = isFeatured;
         this.imageUrl = imageUrl;
-//        this.createdDate = createdDate;
-//        this.lastModifiedDate = lastModifiedDate;
     }
 
     public int getProductId()
@@ -131,11 +127,4 @@ public class Product
     {
         this.imageUrl = imageUrl;
     }
-
-//    @CreatedDate
-//    private LocalDateTime createdDate;
-//
-//    @LastModifiedDate
-//    private LocalDateTime lastModifiedDate;
-
 }

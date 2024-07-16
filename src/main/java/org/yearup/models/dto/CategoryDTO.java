@@ -1,30 +1,21 @@
-package org.yearup.models;
-
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+package org.yearup.models.dto;
 
 import javax.validation.constraints.NotBlank;
 
-
-
-public class Category
-{
+public class CategoryDTO {
     private Long categoryId;
-    @NotBlank (message = "Name is required")
+    @NotBlank  (message = "Name is required")
     private String name;
     @NotBlank (message = "Description is required")
     private String description;
 
-    public Category()
-    {
+    public CategoryDTO() {
     }
 
-    public Category(Long categoryId, String name, String description, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public CategoryDTO(Long categoryId, String name, String description) {
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getCategoryId()
@@ -56,11 +47,4 @@ public class Category
     {
         this.description = description;
     }
-
-    private LocalDateTime createdDate;
-
-    private LocalDateTime lastModifiedDate;
-
-    protected void onCreate() { createdDate = LocalDateTime.now(ZoneOffset.UTC); }
-    protected void onUpdate() { lastModifiedDate = LocalDateTime.now(ZoneOffset.UTC); }
 }

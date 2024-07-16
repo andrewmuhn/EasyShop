@@ -11,6 +11,8 @@ import org.yearup.models.Category;
 import org.yearup.models.Product;
 import org.yearup.models.dto.CategoryDTO;
 import org.yearup.models.dto.CreateCategoryDTO;
+import org.yearup.models.dto.ProductDTO;
+import org.yearup.models.dto.UpdateCategoryDTO;
 import org.yearup.services.CategoryService;
 import org.yearup.services.ProductService;
 
@@ -24,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@CrossOrigin
 public class CategoriesController
 {
     private CategoryService categoryService;
@@ -58,17 +61,6 @@ public class CategoriesController
         return new ResponseEntity<>(categoryService.getCategoryById(id), HttpStatus.OK);
     }
 
-    // the url to return all products in category 1 would look like this
-    // https://localhost:8080/categories/1/products
-    @GetMapping("{categoryId}/products")
-    @PreAuthorize("permitAll()")
-    public List<Product> getProductsById(@PathVariable int categoryId)
-    {
-        // get a list of product by categoryId
-//        return new ResponseEntity<>(productService.)
-        return null;
-    }
-
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
     @PostMapping()
@@ -83,9 +75,14 @@ public class CategoriesController
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
-    public void updateCategory(@PathVariable int id, @RequestBody Category category)
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void updateCategory(@PathVariable int id, @Valid @RequestBody UpdateCategoryDTO dto)
     {
         // update the category by id
+        categoryService.updateCategory(dto, id);
+//        return new ResponseEntity<>(category, HttpStatus.OK);
+
     }
 
 

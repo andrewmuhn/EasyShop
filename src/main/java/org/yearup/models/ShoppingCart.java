@@ -41,6 +41,8 @@ public class ShoppingCart
 
     }
 
+    public int getQuantity(int productId) { return items.get(productId).getQuantity(); }
+
     public BigDecimal getTotal()
     {
         BigDecimal total = items.values()

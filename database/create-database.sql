@@ -40,6 +40,8 @@ CREATE TABLE products (
     image_url VARCHAR(200),
     stock INT NOT NULL DEFAULT 0,
     featured BOOLEAN NOT NULL DEFAULT FALSE,
+    created_date timestamp,
+    last_modified_date timestamp,
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 

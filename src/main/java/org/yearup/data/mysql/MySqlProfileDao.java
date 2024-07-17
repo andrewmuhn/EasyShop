@@ -44,4 +44,59 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         }
     }
 
+    @Override
+    public Profile getByUserId(int userId) throws RuntimeException  {
+        String query = "SELECT * FROM profiles WHERE user_id = ?";
+        Profile profile = null;
+
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    profile = new Profile();
+                    profile.setUserId(rs.getInt("user_id"));
+                    profile.setFirstName(rs.getString("first_name"));
+                    profile.setLastName(rs.getString("last_name"));
+                    profile.setPhone(rs.getString("phone"));
+                    profile.setEmail(rs.getString("email"));
+                    profile.setAddress(rs.getString("address"));
+                    profile.setCity(rs.getString("city"));
+                    profile.setState(rs.getString("state"));
+                    profile.setZip(rs.getString("zip"));
+                }
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return profile;
+    }
+
+    @Override
+    public void update(Profile profile, int userId) throws RuntimeException {
+        String query = "UPDATE profiles SET user_id = ?, first_name = ?, last_name = ?, phone = ?, email = ?, address" +
+                " = ?, city = ?, state = ?, zip = ? WHERE user_id = ?";
+
+        try (Connection conn = getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setString(2, profile.getFirstName());
+            ps.setString(3, profile.getLastName());
+            ps.setString(4, profile.getPhone());
+            ps.setString(5, profile.getEmail());
+            ps.setString(6, profile.getAddress());
+            ps.setString(7, profile.getCity());
+            ps.setString(8, profile.getState());
+            ps.setString(9, profile.getZip());
+            ps.setInt(10, userId);
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

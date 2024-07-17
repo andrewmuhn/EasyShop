@@ -7,7 +7,11 @@ import org.yearup.data.ProductDao;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,8 +98,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     public Product create(Product product)
     {
 
-        String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured, " +
+                "created_date, last_modified_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection connection = getConnection())
         {
@@ -108,6 +112,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setString(6, product.getImageUrl());
             statement.setInt(7, product.getStock());
             statement.setBoolean(8, product.isFeatured());
+            statement.setTimestamp(9, new java.sql.Timestamp(System.currentTimeMillis()));
+            statement.setTimestamp(10, new java.sql.Timestamp(System.currentTimeMillis()));
 
             int rowsAffected = statement.executeUpdate();
 
@@ -144,6 +150,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
                 "   , image_url = ? " +
                 "   , stock = ? " +
                 "   , featured = ? " +
+                " , last_modified_date = ?" +
                 " WHERE product_id = ?;";
 
         try (Connection connection = getConnection())
@@ -157,7 +164,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setString(6, product.getImageUrl());
             statement.setInt(7, product.getStock());
             statement.setBoolean(8, product.isFeatured());
-            statement.setInt(9, productId);
+            statement.setTimestamp(9, new java.sql.Timestamp(System.currentTimeMillis()));
+            statement.setInt(10, productId);
 
             statement.executeUpdate();
         }

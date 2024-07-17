@@ -2,12 +2,15 @@ package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
+import org.yearup.models.dto.CreateProductDTO;
 import org.yearup.models.dto.ProductDTO;
+import org.yearup.models.dto.UpdateProductDTO;
 import org.yearup.services.ProductService;
 
 import java.math.BigDecimal;
@@ -30,23 +33,16 @@ public class ProductsController
 
     @GetMapping("")
     @PreAuthorize("permitAll()")
-    public List<Product> search(@RequestParam(name="cat", required = false) Integer categoryId,
+    public ResponseEntity<List<ProductDTO>> search(@RequestParam(name="cat", required = false) Integer categoryId,
                                 @RequestParam(name="minPrice", required = false) BigDecimal minPrice,
                                 @RequestParam(name="maxPrice", required = false) BigDecimal maxPrice,
                                 @RequestParam(name="color", required = false) String color
                                 )
     {
-        try
-        {
-            return productDao.search(categoryId, minPrice, maxPrice, color);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+        List<ProductDTO> products = productService.search(categoryId, minPrice, maxPrice, color);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    // list by category id
 
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
@@ -59,30 +55,16 @@ public class ProductsController
 
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Product addProduct(@RequestBody Product product)
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody CreateProductDTO productDTO)
     {
-        try
-        {
-            return productDao.create(product);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+            return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateProduct(@PathVariable int id, @RequestBody Product product)
+    public void updateProduct(@PathVariable int id, @RequestBody UpdateProductDTO productDTO)
     {
-        try
-        {
-            productDao.create(product);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+       productService.updateProduct(productDTO, id);
     }
 
     @DeleteMapping("{id}")

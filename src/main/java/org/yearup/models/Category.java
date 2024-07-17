@@ -3,9 +3,6 @@ package org.yearup.models;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
@@ -64,8 +61,6 @@ public class Category
 
     private LocalDateTime lastModifiedDate;
 
-    @PrePersist
     protected void onCreate() { createdDate = LocalDateTime.now(ZoneOffset.UTC); }
-    @PreUpdate
     protected void onUpdate() { lastModifiedDate = LocalDateTime.now(ZoneOffset.UTC); }
 }

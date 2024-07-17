@@ -91,9 +91,9 @@ VALUES  (1, 'Joe', 'Joesephus', '800-555-1234', 'joejoesephus@email.com', '789 O
 
 /* INSERT Categories */
 INSERT INTO categories (name, description, created_date, last_modified_date)
-VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.', '2024-07-11 12:00:00'),
-        ('Fashion', 'Discover trendy clothing and accessories for men and women.', '2024-07-11 12:00:00'),
-        ('Home & Kitchen', 'Find everything you need to decorate and equip your home.', '2024-07-11 12:00:00');
+VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.'),
+        ('Fashion', 'Discover trendy clothing and accessories for men and women.'),
+        ('Home & Kitchen', 'Find everything you need to decorate and equip your home.');
 
 /* INSERT Products */
 -- electronics

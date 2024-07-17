@@ -27,8 +27,9 @@ CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT,
-    created_date timestamp,
-    last_modified_date timestamp);
+    created_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    last_modified_date timestamp DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
@@ -40,6 +41,8 @@ CREATE TABLE products (
     image_url VARCHAR(200),
     stock INT NOT NULL DEFAULT 0,
     featured BOOLEAN NOT NULL DEFAULT FALSE,
+    created_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    last_modified_date timestamp DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
@@ -90,14 +93,14 @@ VALUES  (1, 'Joe', 'Joesephus', '800-555-1234', 'joejoesephus@email.com', '789 O
         (3, 'George', 'Jetson', '800-555-9876', 'george.jetson@email.com', '123 Birch Parkway','Dallas','TX','75051')     ;
 
 /* INSERT Categories */
-INSERT INTO categories (name, description, created_date, last_modified_date)
+INSERT INTO categories (name, description)
 VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.'),
         ('Fashion', 'Discover trendy clothing and accessories for men and women.'),
         ('Home & Kitchen', 'Find everything you need to decorate and equip your home.');
 
 /* INSERT Products */
 -- electronics
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, color) 
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, color)
 VALUES  ('Smartphone', 499.99, 1, 'A powerful and feature-rich smartphone for all your communication needs.', 'smartphone.jpg', 50, FALSE, 'Black'),
         ('Laptop', 899.99, 1, 'A high-performance laptop for work and entertainment.', 'laptop.jpg', 30, FALSE, 'Gray'),
         ('Headphones', 99.99, 1, 'Immerse yourself in music with these high-quality headphones.', 'headphones.jpg', 100, TRUE, 'White'),
@@ -120,7 +123,7 @@ VALUES  ('Smartphone', 499.99, 1, 'A powerful and feature-rich smartphone for al
         ('Portable Charger', 39.99, 1, 'Keep your devices powered up on the go with this compact and reliable portable charger.', 'portable-charger.jpg', 50, FALSE, 'Black');
 
 -- mens clothes
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, color) 
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, color)
 VALUES  ('Men''s T-Shirt', 29.99, 2, 'A comfortable and stylish t-shirt for everyday wear.', 'mens-tshirt.jpg', 50, TRUE, 'Charcoal'),
         ('Men''s Jeans', 59.99, 2, 'Classic denim jeans for a timeless and casual look.', 'mens-jeans.jpg', 30, FALSE, 'Blue'),
         ('Men''s Dress Shirt', 49.99, 2, 'A sophisticated dress shirt for formal occasions.', 'mens-dress-shirt.jpg', 40, FALSE, 'White'),

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.sql.Timestamp;
 
 @Component
 public class MySqlProductDao extends MySqlDaoBase implements ProductDao
@@ -144,6 +145,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
                 "   , image_url = ? " +
                 "   , stock = ? " +
                 "   , featured = ? " +
+                "   , last_modified_date = ? " +
                 " WHERE product_id = ?;";
 
         try (Connection connection = getConnection())
@@ -157,7 +159,8 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setString(6, product.getImageUrl());
             statement.setInt(7, product.getStock());
             statement.setBoolean(8, product.isFeatured());
-            statement.setInt(9, productId);
+            statement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setInt(10, productId);
 
             statement.executeUpdate();
         }
@@ -198,10 +201,9 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         int stock = row.getInt("stock");
         boolean isFeatured = row.getBoolean("featured");
         String imageUrl = row.getString("image_url");
-//        LocalDateTime createdDate = LocalDateTime.parse(row.getString("created_date"));
-//        LocalDateTime lastModifiedDate = LocalDateTime.parse(row.getString("last_modified_date"));
+        Timestamp createdDate = row.getTimestamp("created_date");
+        Timestamp lastModifiedDate = row.getTimestamp("last_modified_date");
 
-        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl
-                );
+        return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl, createdDate, lastModifiedDate);
     }
 }

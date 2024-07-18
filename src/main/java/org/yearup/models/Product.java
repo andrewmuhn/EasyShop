@@ -5,8 +5,7 @@ import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class Product
-{
+public class Product {
     private int productId;
 
     @NotBlank(message = "product must have a name")
@@ -44,93 +43,75 @@ public Product(){
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public int getProductId()
-    {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId)
-    {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public BigDecimal getPrice()
-    {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price)
-    {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getCategoryId()
-    {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId)
-    {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getColor()
-    {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(String color)
-    {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public int getStock()
-    {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(int stock)
-    {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public boolean isFeatured()
-    {
+    public boolean isFeatured() {
         return isFeatured;
     }
 
-    public void setFeatured(boolean featured)
-    {
+    public void setFeatured(boolean featured) {
         isFeatured = featured;
     }
 
-    public String getImageUrl()
-    {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl)
-    {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 

@@ -33,6 +33,16 @@ public class ShoppingCart
         return items.get(productId);
     }
 
+    public ShoppingCart(Map<Integer, ShoppingCartItem> items) {
+        this.items = items;
+    }
+
+    public ShoppingCart() {
+
+    }
+
+    public int getQuantity(int productId) { return items.get(productId).getQuantity(); }
+
     public BigDecimal getTotal()
     {
         BigDecimal total = items.values()

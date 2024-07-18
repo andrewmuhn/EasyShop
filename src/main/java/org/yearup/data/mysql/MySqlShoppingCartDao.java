@@ -9,10 +9,7 @@ import org.yearup.models.ShoppingCartItem;
 import javax.sql.DataSource;
 import javax.swing.text.html.Option;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 @Component
@@ -151,8 +148,10 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         int stock = row.getInt("stock");
         String imageUrl = row.getString("image_url");
         boolean isFeatured = row.getBoolean("featured");
+        Timestamp createdDate = row.getTimestamp("created_date");
+        Timestamp lastModifiedDate = row.getTimestamp("last_modified_date");
 
-         Product product = new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl
+         Product product = new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl, createdDate, lastModifiedDate
         );
 
         return new ShoppingCartItem(product, quantity);

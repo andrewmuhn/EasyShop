@@ -36,7 +36,7 @@ public class CategoryService {
     }
 
     public void deleteCategory(int id){
-        Category category = categoryDao.getById(id)
+        categoryDao.getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
         categoryDao.delete(id);
     }

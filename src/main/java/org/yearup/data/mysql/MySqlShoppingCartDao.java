@@ -7,6 +7,7 @@ import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 
 import javax.sql.DataSource;
+import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -119,6 +120,24 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     //if in cart update quantity
     //else insert with quantity = 1
     //return shopping cart
+
+    @Override
+    public Optional<ShoppingCart> deleteFromCart(int userId) {
+        Optional<ShoppingCart> cart = getByUserId(userId);
+
+        String sql = "DELETE FROM shopping_cart WHERE user_id = ?";
+
+        try(Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+
+            statement.executeUpdate();
+            cart = getByUserId(userId);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return cart;
+    }
 
     private ShoppingCartItem mapRow(ResultSet row) throws SQLException{
         int productId = row.getInt("product_id");

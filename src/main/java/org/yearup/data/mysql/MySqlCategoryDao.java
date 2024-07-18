@@ -6,10 +6,8 @@ import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -101,13 +99,14 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     public void update(int categoryId, Category category)
     {
         // update category
-        String sql = "UPDATE categories SET name = ?, description = ? WHERE category_id = ?";
+        String sql = "UPDATE categories SET name = ?, description = ?, last_modified_date =? WHERE category_id = ?";
 
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, category.getName());
             statement.setString(2, category.getDescription());
-            statement.setInt(3, categoryId);
+            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setInt(4, categoryId);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -136,12 +135,16 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         Long categoryId = row.getLong("category_id");
         String name = row.getString("name");
         String description = row.getString("description");
+        Timestamp createdDate = row.getTimestamp("created_date");
+        Timestamp lastModifiedDate = row.getTimestamp("last_modified_date");
 
         Category category = new Category()
         {{
             setCategoryId(categoryId);
             setName(name);
             setDescription(description);
+            setCreatedDate(createdDate);
+            setLastModifiedDate(lastModifiedDate);
         }};
 
         return category;

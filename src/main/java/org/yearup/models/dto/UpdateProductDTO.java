@@ -2,6 +2,7 @@ package org.yearup.models.dto;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class UpdateProductDTO {
     @NotBlank(message = "product must have a name")
@@ -17,6 +18,7 @@ public class UpdateProductDTO {
     private int stock;
     private boolean isFeatured;
     private String imageUrl;
+    private Timestamp lastModifiedDate;
 
     public UpdateProductDTO()
     {
@@ -24,7 +26,7 @@ public class UpdateProductDTO {
 
     public UpdateProductDTO(String name, BigDecimal price, int categoryId, String description,
             String color,
-            int stock, boolean isFeatured, String imageUrl)
+            int stock, boolean isFeatured, String imageUrl, Timestamp lastModifiedDate)
     {
         this.name = name;
         this.price = price;
@@ -34,6 +36,7 @@ public class UpdateProductDTO {
         this.stock = stock;
         this.isFeatured = isFeatured;
         this.imageUrl = imageUrl;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getName()
@@ -114,5 +117,13 @@ public class UpdateProductDTO {
     public void setImageUrl(String imageUrl)
     {
         this.imageUrl = imageUrl;
+    }
+
+    public Timestamp getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Timestamp lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

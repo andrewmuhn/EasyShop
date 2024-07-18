@@ -1,5 +1,6 @@
 package org.yearup.models;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -14,12 +15,14 @@ public class Category
     private String name;
     @NotBlank (message = "Description is required")
     private String description;
+    private Timestamp createdDate;
+    private Timestamp lastModifiedDate;
 
     public Category()
     {
     }
 
-    public Category(Long categoryId, String name, String description, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public Category(Long categoryId, String name, String description, Timestamp createdDate, Timestamp lastModifiedDate) {
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
@@ -57,10 +60,19 @@ public class Category
         this.description = description;
     }
 
-    private LocalDateTime createdDate;
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
 
-    private LocalDateTime lastModifiedDate;
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
 
-    protected void onCreate() { createdDate = LocalDateTime.now(ZoneOffset.UTC); }
-    protected void onUpdate() { lastModifiedDate = LocalDateTime.now(ZoneOffset.UTC); }
+    public Timestamp getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Timestamp lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 }

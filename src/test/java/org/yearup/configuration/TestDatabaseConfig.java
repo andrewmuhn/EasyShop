@@ -78,7 +78,7 @@ public class TestDatabaseConfig
         dataSource.setSuppressClose(true);
 
         ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
-        Reader reader = new BufferedReader(new FileReader((new ClassPathResource("test-data.sql")).getFile().getAbsolutePath()));
+        Reader reader = new BufferedReader(new FileReader((new ClassPathResource("test-data-deprecated.sql")).getFile().getAbsolutePath()));
         runner.runScript(reader);
         dataSource.getConnection().commit();
 

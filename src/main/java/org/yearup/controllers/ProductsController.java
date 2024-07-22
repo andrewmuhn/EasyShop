@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductsController
 {
     private final ProductService productService;
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     @Autowired
     public ProductsController(ProductDao productDao, ProductService productService)

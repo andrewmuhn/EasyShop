@@ -9,8 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.yearup.configuration.TestSecurityConfig;
+import org.yearup.data.ProductDao;
 import org.yearup.data.mysql.MySqlProductDao;
 import org.yearup.models.Product;
+import org.yearup.models.dto.ProductDTO;
+import org.yearup.services.ProductService;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -29,15 +32,17 @@ public class ProductControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MySqlProductDao productDao;
+    private ProductService productService;
+    @MockBean
+    private ProductDao productDao;
 
     @Test
     public void testGetProductById() throws Exception {
-        Product product = new Product(1, "Smartphone", new BigDecimal("499.99"), 1,
+        ProductDTO productDTO = new ProductDTO(1, "Smartphone", new BigDecimal("499.99"), 1,
                 "A powerful and feature-rich smartphone for all your communication needs.",
-                "Black", 50, false, "smartphone.jpg", new Timestamp(2024), new Timestamp(2024));
+                "Black", 50, false, "smartphone.jpg");
 
-        when(productDao.getById(1)).thenReturn(Optional.of(product));
+        when(productService.getProductById(1)).thenReturn(productDTO);
 
         mockMvc.perform(get("/products/1"))
                 .andExpect(status().isOk())
